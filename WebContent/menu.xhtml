@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui">
+
+
+
+<h:body>
+	<h:form>
+
+		<img
+			src="#{facesContext.externalContext.request.contextPath}/img/print.png"
+			height="30%" width="100%" />
+
+
+		<p:menubar>
+
+
+
+			<p:submenu label="Cadastro" icon="ui-icon-pencil">
+				<p:menuitem value="cadastro de Clientes" url="/cadastroCliente.xhtml" />
+				<p:menuitem value="cadastro de Produtos" url="/cadastroProduto.xhtml" />
+				<p:menuitem value="Cadastro de Vendas" url="/cadastroVenda.xhtml" />
+				
+
+			</p:submenu>
+
+			<p:submenu label="Senha" icon="ui-icon-pencil">
+				<p:menuitem value="Trocar Senha" url="/mudarSenha.xhtml" />
+
+			</p:submenu>
+			
+			<p:submenu label="Consulta" icon="ui-icon-search">
+				<p:menuitem value="Consultar Clientes" url="/consultarCliente.xhtml" />
+				<p:menuitem value="Consultar Produtos" url="/consultarProduto.xhtml" />
+			</p:submenu>
+
+
+			<f:facet name="options">
+
+				<p:outputLabel
+					value="Usuario logado: #{usuarioBean.usuario.nome}     " />
+				<p:commandButton value="Logout" ajax="false"
+					action="#{usuarioBean.logout()}" icon="ui-icon-extlink" />
+
+
+
+			</f:facet>
+
+
+
+
+		</p:menubar>
+		<p:spacer />
+	</h:form>
+
+</h:body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Consultar Produtos</title>
+</h:head>
+
+
+	<h:body>
+		<ui:include src="/menu.xhtml" />
+		
+		<h:form>
+		
+			<div align="center">
+			
+				<br />
+				
+					<p:panel header="Consulta de Produtos" style="width:100%; height: 400px">
+					
+						<p:messages id="msg" showDetail="true" closable="true" />
+						
+							<div align="left">
+							
+								<h:panelGrid columns="4" cellpadding="10">
+								
+									<p:outputLabel value="Descrição "/>
+									<p:inputText value="#{produtoBean.descricaoBusca}"/>
+									
+									<p:commandButton update="msg" value="Consultar" ajax="false" action="#{produtoBean.consultarProduto()}" />
+					
+								</h:panelGrid>
+
+							</div>
+				
+				<!-- esse rendered e pra testar um atributo boolean pra nesse caso para mostrar a tabela
+				 essa var e pra pegar a lista e colocar em um unico objeto e depois se usa os complementos para poder aparecer nas opçoes da tela
+				 de seleçcao. -->
+				
+				<p:dataTable value="#{produtoBean.produtos}" rendered="#{produtoBean.mostrarTabela}" var="a" emptyMessage="Sem resultado">
+				
+				<p:column headerText="Descrição" >
+				<h:outputText value="#{a.descricao}" />
+				</p:column>
+				
+				<p:column headerText="Valor" >
+				<h:outputText value="#{a.valor}" />
+				</p:column>
+				
+								
+				</p:dataTable>
+				
+			</p:panel>
+			
+		</div>
+		
+	</h:form>
+	
+</h:body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+
+	<title>Alterar Senha</title>
+
+</h:head>
+
+
+
+	<h:body>
+
+		<ui:include src="/menu.xhtml" />
+
+		<h:form>
+		<div align="center">
+
+			<p:panel header="Alterar Senha">
+				<p:messages id="msg" showDetail="true" closable="true" />
+				<div align="left">
+
+					<h:panelGrid columns="2">
+
+
+
+						<p:outputLabel value="Nova Senha :" />
+						<p:password value="#{usuarioBean.novaSenha}" />
+
+						<p:outputLabel value="Confirmar Senha :" />
+						<p:password value="#{usuarioBean.confirmarSenha}" />
+
+						<p:outputLabel value="" />
+						<p:commandButton value="Salvar"
+							action="#{usuarioBean.trocarSenha()}" update="msg" />
+
+					</h:panelGrid>
+				</div>
+			</p:panel>
+
+
+		</div>
+		</h:form>
+	</h:body>
+
+
+
+
+
+
+
+</html>

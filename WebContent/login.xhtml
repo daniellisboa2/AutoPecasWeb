@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+
+<h:head>
+
+	<title>Login</title>
+
+</h:head>
+
+<h:form>
+
+	<h:body>
+	<img src="#{facesContext.externalContext.request.contextPath}/img/print.png" height="150px" width="300px" />
+		
+		<div align="center">
+
+			<p:panel header="Entre no Sitema">
+			<p:messages id="msg" showDetail="true" closable="true"/>
+				<div align="center">
+
+					<h:panelGrid columns="2">
+
+						
+
+						<p:outputLabel value="Login :" />
+						<p:inputText value="#{usuarioBean.login}"/>
+
+						<p:outputLabel value="Senha :" />
+						<p:password value="#{usuarioBean.senha}"/>
+
+						<p:outputLabel value="" />
+						<p:commandButton value="Entrar" action="#{usuarioBean.buscarUsuario()}" update="msg"/>
+
+					</h:panelGrid>
+				</div>
+			</p:panel>
+
+
+		</div>
+	</h:body>
+
+
+
+
+</h:form>
+
+
+</html>
