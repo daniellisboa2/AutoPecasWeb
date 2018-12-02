@@ -40,6 +40,9 @@ public class VendaBean
 	
 	private int qtdadeProduto = 0;
 	
+	private List<Venda> vendas;
+	private boolean mostrarTabela = false;
+	
 	private Usuario usuarioLogado;
 	
 	@PostConstruct
@@ -155,6 +158,31 @@ public class VendaBean
 
 		}
 		
+		public void ConsultarVenda() {
+			try {
+				vendas = vendaDao.buscarVendaPorCliente(idclienteSelecionado);
+				if(vendas.size()>0) mostrarTabela = true;
+				
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+
+	}
+		
+		public void deletarVenda(Venda venda) {
+			try {
+				int resultado = vendaDao.deletarVenda(venda);
+				if(resultado !=0) {
+					vendas = vendaDao.buscarVendaPorCliente(idclienteSelecionado);
+				}
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+
+	}
+		
 
 		public List<Produto> getProdutos()
 		{
@@ -215,6 +243,23 @@ public class VendaBean
 		{
 			this.qtdadeProduto = qtdadeProduto;
 		}
+
+		public boolean isMostrarTabela() {
+			return mostrarTabela;
+		}
+
+		public void setMostrarTabela(boolean mostrarTabela) {
+			this.mostrarTabela = mostrarTabela;
+		}
+
+		public List<Venda> getVendas() {
+			return vendas;
+		}
+
+		public void setVendas(List<Venda> vendas) {
+			this.vendas = vendas;
+		}
+		
 		
 		
 	

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Venda 
 {
-	
+	private int id;
 	private Cliente cliente;
 	private Produto produto;
 	private Date dataVenda;
@@ -53,7 +53,17 @@ public class Venda
 	public void setValorVenda(double valorVenda) 
 	{
 		this.valorVenda = valorVenda;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}	
+	
+	
 	
 
 }

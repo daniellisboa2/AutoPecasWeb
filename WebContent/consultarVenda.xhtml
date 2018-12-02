@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Deletar Venda</title>
+</h:head>
+<ui:include src="/menu.xhtml" />
+<h:body>
+	<h:form>
+
+		<div align="center">
+			<br />
+			<p:panel header="Consultar venda" style="width:80%; heigth:400px">
+				<p:messages id="msg" showDetail="true" cloable="true" />
+				<div align="left">
+
+					
+
+						<h:panelGrid columns="4" cellpadding="5">
+					
+						<p:outputLabel value="Cliente: " />
+						
+						<p:selectOneMenu style="width:125px"
+						value="#{vendaBean.idclienteSelecionado}" immediate="true">
+							
+							<f:selectItem itemLabel="Selecione..." itemValue="" />
+														
+							<f:selectItems value="#{vendaBean.clientes}" var="c"
+							itemLabel="#{c.nome}" itemValue="#{c.id}" />
+						</p:selectOneMenu>
+						
+						<p:commandButton update="msg" value="Consultar" ajax="false" action="#{vendaBean.ConsultarVenda()}" />
+					
+					</h:panelGrid>
+
+				</div>
+				<p:dataTable value="#{vendaBean.vendas}"
+					rendered="#{vendaBean.mostrarTabela}" var="a"
+					emptyMessage="Sem resultdos" paginattor="true" rows="5">
+					
+					<p:column headerText="ID da Venda">
+						<h:outputText value="#{a.id}" />
+					</p:column>
+					
+					
+					<p:column headerText=" ID do Cliente">
+						<h:outputText value="#{a.cliente.id}" />
+					</p:column>
+
+					<p:column headerText="ID do Produto">
+						<h:outputText value="#{a.produto.id}" />
+					</p:column>
+
+					<p:column headerText="Data da Venda">
+						<h:outputText value="#{a.dataVenda}" />
+					</p:column>
+					
+					<p:column headerText="Valor da Venda">
+						<h:outputText value="#{a.valorVenda}" />
+					</p:column>
+
+					
+					
+				</p:dataTable>
+
+			</p:panel>
+		</div>
+		
+	</h:form>
+</h:body>
+</html>
