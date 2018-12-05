@@ -111,4 +111,38 @@ public class ProdutoDao
 		return null;
 	}
 	
+	public int editarProduto(Produto produto) throws SQLException{
+		Conexao c = new Conexao();
+		Connection cc = c.conectar();
+		
+		String sql = "update produtos set descricao = '"+produto.getDescricao()+"',"
+				+ "valor =" +produto.getValor()+		
+				 "where id_produto =" +produto.getId();
+		
+		Statement stm = (Statement) cc.createStatement();
+		int result = stm.executeUpdate(sql);
+		
+		c.desconectar();
+		return result;
+	}
+	
+	public int deletarProduto(Produto produto) throws SQLException {
+
+		Conexao c = new Conexao();
+		Connection cc = c.conectar();
+	
+
+		String sql = "delete  from produtos where id_produto = "+produto.getId();
+				
+
+		
+			Statement stm = (Statement) cc.createStatement();
+			int result = stm.executeUpdate(sql);
+			
+			
+		c.desconectar();
+		return result;
+		
+	}
+	
 }

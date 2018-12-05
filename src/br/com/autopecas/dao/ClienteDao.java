@@ -114,6 +114,40 @@ public class ClienteDao
 		return null;
 	}
 	
+	
+	public int deletarCliente(Cliente cliente) throws SQLException {
 
+		Conexao c = new Conexao();
+		Connection cc = c.conectar();
+	
+
+		String sql = "delete  from clientes where id_cliente = "+cliente.getId();
+				
+
+		
+			Statement stm = (Statement) cc.createStatement();
+			int result = stm.executeUpdate(sql);
+			
+			
+		c.desconectar();
+		return result;
+		
+	}
+	
+	public int editarCliente(Cliente cliente) throws SQLException{
+		Conexao c = new Conexao();
+		Connection cc = c.conectar();
+		
+		String sql = "update clientes set nome = '"+cliente.getNome()+"',"
+				+ "cpf = '"+cliente.getCpf()+"',"
+				+ "telefone = '"+cliente.getTelefone()+"'"
+				+ "where id_cliente = "+cliente.getId();
+		
+		Statement stm = (Statement) cc.createStatement();
+		int result = stm.executeUpdate(sql);
+		
+		c.desconectar();
+		return result;
+	}
 
 }

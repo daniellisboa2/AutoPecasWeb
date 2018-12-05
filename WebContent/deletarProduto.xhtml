@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Deletar Produto</title>
+</h:head>
+
+<h:body>
+
+	<ui:include src="/menu.xhtml" />
+	<h:form>
+		<div align="center">
+			<p:panel header="Deletar produto" style="width:80%; height: 400 px;">
+				<p:messages id="msg" showDetail="true" closable="true" />
+				<div align="left">
+					<h:panelGrid columns="4" cellpadding="10">
+						<p:outputLabel value="Produto: " />
+						<p:inputText value="#{produtoBean.descricaoBusca}" />
+						<p:commandButton update="msg" value="Consultar" ajax="false"
+							action="#{produtoBean.consultarProduto()}" />
+					</h:panelGrid>
+
+				</div>
+				<p:dataTable id="dtTable" value="#{produtoBean.produtos}"
+					rendered="#{produtoBean.mostrarTabela}" var="p"
+					emptyMessage="Sem Resultados" paginator="true" rows="4">
+
+					<p:column headerText="Descrição">
+						<h:outputText value="#{p.descricao}" />
+					</p:column>
+					<p:column headerText="Valor">
+						<h:outputText value="#{p.valor}" />
+					</p:column>
+
+					<p:column headerText="Deletar">
+						<p:commandButton update="dtTable" icon="ui-icon-trash"
+							action="#{produtoBean.deletarProduto(p)}" >
+							<p:confirm header="Confirmação" message="Desejas apagar o registro do produto?"
+							icon="pi pi-exclamation-triangle" />
+						
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+			</p:panel>
+		</div>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+    </p:confirmDialog>
+		
+	</h:form>
+</h:body>
+</html>
+
+

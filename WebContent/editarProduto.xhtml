@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Editar Produtos</title>
+</h:head>
+<h:body>
+	<ui:include src="/menu.xhtml" />
+	<h:form>
+		<div align="center">
+			<br />
+			<p:messages id="msg" showDetail="true" closable="true" />
+			<p:panel header="Editar Clientes" style="width:1100px; height: 400px">				
+				<div align="left">
+				
+					<h:panelGrid columns="4" cellpadding="10">
+						<p:outputLabel value="Descrição: " />
+						<p:inputText value="#{produtoBean.descricaoBusca}" />
+						<p:commandButton update="msg" value="Consultar" ajax="false"
+							action="#{produtoBean.consultarProduto()}" />
+
+					</h:panelGrid>
+
+				</div>
+
+				<p:dataTable id="dtTable" value="#{produtoBean.produtos}"
+					rendered="#{produtoBean.mostrarTabela}" var="p"
+					emptyMessage="Sem resultado" paginator="true" rows="5">
+
+					<p:column headerText="Descrição">
+						<h:outputText value="#{p.descricao}" />
+					</p:column>
+
+					<p:column headerText="Valor">
+						<h:outputText value="#{p.valor}" />
+					</p:column>
+
+
+					<p:column headerText="Editar">
+						<p:commandButton update="@all" icon="ui-icon-pencil"
+							action="#{produtoBean.iniciarAlteracaoProduto(p)}">
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+			</p:panel>
+		</div>
+		
+	</h:form>
+
+
+
+	<h:form id="formEditar" rendered="#{produtoBean.mostrarTabelaAlteracao}">
+		<div align="center">
+
+			<p:panel header="Editar dados do Produto" style="width:70%">
+			
+				<div align="left">
+
+					<h:panelGrid columns="2" cellpadding="4">
+
+						<p:outputLabel value="Descrição :" />
+						<p:inputText value="#{produtoBean.produtoAlteracao.descricao}" />
+
+						<p:outputLabel value="Matricula :" />
+						<p:inputText value="#{produtoBean.produtoAlteracao.valor}" />
+
+
+					
+
+					</h:panelGrid>
+				</div>
+				
+				<div align="center">
+				<p:panelGrid columns="2">
+				
+					<p:commandButton update="@all" value="Salvar" ajax="false" action="#{produtoBean.concluirAlteracao()}"/>
+					
+					<p:commandButton update="@all" value="Cancelar" ajax="false" action="#{produtoBean.cancelarAlteracaoProduto()}"/>
+					
+				</p:panelGrid>
+				</div>
+			</p:panel>
+
+				
+		</div>
+	</h:form>
+
+
+
+
+
+</h:body>
+</html>

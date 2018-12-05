@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Deletar Cliente</title>
+</h:head>
+
+<h:body>
+
+	<ui:include src="/menu.xhtml" />
+	<h:form>
+		<div align="center">
+			<p:panel header="Deletar Cliente" style="width:80%; height: 400 px;">
+				<p:messages id="msg" showDetail="true" closable="true" />
+				<div align="left">
+					<h:panelGrid columns="4" cellpadding="10">
+						<p:outputLabel value="Cliente: " />
+						<p:inputText value="#{clienteBean.nomeBusca}" />
+						<p:commandButton update="msg" value="Consultar" ajax="false"
+							action="#{clienteBean.consultarCliente()}" />
+					</h:panelGrid>
+
+				</div>
+				<p:dataTable id="dtTable" value="#{clienteBean.clientes}"
+					rendered="#{clienteBean.mostrarTabela}" var="c"
+					emptyMessage="Sem Resultados" paginator="true" rows="4">
+					<p:column headerText="Nome">
+						<h:outputText value="#{c.nome}" />
+					</p:column>
+					<p:column headerText="CPF">
+						<h:outputText value="#{c.cpf}" />
+					</p:column>
+					<p:column headerText="Telefone">
+						<h:outputText value="#{c.telefone}" />
+					</p:column>
+					<p:column headerText="Deletar">
+						<p:commandButton update="dtTable" icon="ui-icon-trash"
+							action="#{clienteBean.deletarCliente(c)}" >
+							<p:confirm header="Confirmação" message="Desejas deletar o registro de Cliente?"
+							icon="pi pi-exclamation-triangle" />
+						
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+			</p:panel>
+		</div>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+    </p:confirmDialog>
+		
+	</h:form>
+</h:body>
+</html>
+

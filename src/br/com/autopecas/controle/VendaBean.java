@@ -161,7 +161,8 @@ public class VendaBean
 		public void ConsultarVenda() {
 			try {
 				vendas = vendaDao.buscarVendaPorCliente(idclienteSelecionado);
-				if(vendas.size()>0) mostrarTabela = true;
+				if(vendas.size()>0) 
+					mostrarTabela = true;
 				
 			} catch (SQLException e) {
 				

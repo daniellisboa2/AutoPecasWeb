@@ -7,7 +7,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -15,12 +16,13 @@ import br.com.autopecas.dao.ProdutoDao;
 import br.com.autopecas.modelo.Produto;
 import br.com.autopecas.modelo.Usuario;
 
-@RequestScoped
+@ViewScoped
 @ManagedBean
 
 public class ProdutoBean 
 {
 	private Produto produto;
+	private Produto produtoAlteracao;
 	private ProdutoDao produtoDao;
 	private Usuario usuarioLogado;
 	
@@ -29,6 +31,7 @@ public class ProdutoBean
 	private String descricaoBusca;
 	private List<Produto> produtos;
 	private boolean mostrarTabela = false;	
+	private boolean mostrarTabelaAlteracao = false;
 	
 	@PostConstruct
 	public void init()
@@ -97,22 +100,74 @@ public class ProdutoBean
 			try
 			{
 				produtos = produtoDao.buscaProdutoPorDescricao(descricaoBusca);
-				if(produtos.size()>0) mostrarTabela = true;
-			}
+				if(produtos.size()>0) 
+					mostrarTabela = true;
+					}
 		
 			catch (SQLException e) 
 			{
-				// TODO Auto-generated catch block
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atençao!", "nenhum produto encontrado"));
 				e.printStackTrace();
 			}
-		
+			
 		}
+		
 		
 		else
 		{
 			 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atençao!", "Preencha o campo de busca")); 
 		}
 	}
+
+	
+	public void deletarProduto(Produto produto) {
+		try {
+			int resultado = produtoDao.deletarProduto(produto);
+			if(resultado != 0) {
+				produtos = produtoDao.buscaProdutoPorDescricao(descricaoBusca);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void iniciarAlteracaoProduto(Produto produto){
+		produtoAlteracao = produto;
+		mostrarTabela = false;
+		mostrarTabelaAlteracao = true;
+	}
+	
+	public void cancelarAlteracaoProduto(){
+		mostrarTabelaAlteracao = false;
+		mostrarTabela = true;
+	}
+	
+	public void concluirAlteracao(){
+		
+		try {
+			int resultado = produtoDao.editarProduto(produtoAlteracao);
+			mostrarTabelaAlteracao = false;
+			mostrarTabela = true;
+			if (resultado != 0) {
+				
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO,
+								"Sucesso!", "Produto atualizado com Sucesso"));
+			}else{
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR,
+								"Erro!", "Erro ao atualizar produto"));
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+
+
+	
 
 
 	public Produto getProduto() 
@@ -160,7 +215,30 @@ public class ProdutoBean
 	public void setMostrarTabela(boolean mostrarTabela)
 	{
 		this.mostrarTabela = mostrarTabela;
+	}	
+	
+
+	public boolean isMostrarTabelaAlteracao() {
+		return mostrarTabelaAlteracao;
 	}
+
+
+	public void setMostrarTabelaAlteracao(boolean mostrarTabelaAlteracao) {
+		this.mostrarTabelaAlteracao = mostrarTabelaAlteracao;
+	}
+
+
+	public Produto getProdutoAlteracao() {
+		return produtoAlteracao;
+	}
+
+
+	public void setProdutoAlteracao(Produto produtoAlteracao) {
+		this.produtoAlteracao = produtoAlteracao;
+	}
+
+
+	
 	
 	
 	

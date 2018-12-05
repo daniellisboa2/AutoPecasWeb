@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -25,13 +26,14 @@ public class UsuarioBean
 	private String novaSenha;
 	private String confirmarSenha;
 
+   
 	
 	
 	@PostConstruct
 	public void init()
 	{
 		usuarioDao = new UsuarioDao();
-	
+	    
 	}
 	
 		public String buscarUsuario()
@@ -79,6 +81,8 @@ public class UsuarioBean
 	}
 	
 	
+	
+	
 	public void trocarSenha() 
 	{
 		try 
@@ -120,6 +124,7 @@ public class UsuarioBean
 	}
 
 	
+
 	public Usuario getUsuario()
 	{
 		return usuario;
@@ -144,7 +149,7 @@ public class UsuarioBean
 	{
 		return senha;
 	}
-
+	
 	public void setSenha(String senha) 
 	{
 		this.senha = senha;

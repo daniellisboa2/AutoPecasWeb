@@ -7,7 +7,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -15,12 +16,13 @@ import br.com.autopecas.dao.ClienteDao;
 import br.com.autopecas.modelo.Cliente;
 import br.com.autopecas.modelo.Usuario;
 
-@RequestScoped
-@ManagedBean
+@ViewScoped
+@ManagedBean (name = "clienteBean")
 
 public class ClienteBean 
 {
 	private Cliente cliente;
+	private Cliente clienteAlteracao;
 	private ClienteDao clienteDao;
 	private Usuario usuarioLogado;
 	
@@ -28,6 +30,7 @@ public class ClienteBean
 		private String nomeBusca;
 		private List<Cliente> clientes;
 		private boolean mostrarTabela = false;
+		private boolean mostrarTabelaAlteracao = false;
 	
 
 	
@@ -120,7 +123,56 @@ public class ClienteBean
 			}
 		}
 		
+		public void deletarCliente(Cliente cliente) {
+			try {
+				int resultado = clienteDao.deletarCliente(cliente);
+				if(resultado != 0) {
+					clientes = clienteDao.buscaClientesPorNome(nomeBusca);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
+		
+		public void iniciarAlteracaoCliente(Cliente cliente){
+			clienteAlteracao = cliente;
+			mostrarTabela = false;
+			mostrarTabelaAlteracao = true;
+		}
+		
+		public void cancelarAlteracaoCliente(){
+			mostrarTabelaAlteracao = false;
+			mostrarTabela = true;
+		}
+		
+		public void concluirAlteracao(){
+			
+			try {
+				int resultado = clienteDao.editarCliente(clienteAlteracao);
+				mostrarTabelaAlteracao = false;
+				mostrarTabela = true;
+				if (resultado != 0) {
+					
+					FacesContext.getCurrentInstance().addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_INFO,
+									"Sucesso!", "Cliente atualizado com Sucesso"));
+				}else{
+					FacesContext.getCurrentInstance().addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Erro!", "Erro ao atualizar cliente"));
+				}
+			} catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+		
+
+
+
 		
 
 		public Cliente getCliente() 
@@ -161,7 +213,27 @@ public class ClienteBean
 		public void setClientes(List<Cliente> clientes) 
 		{
 			this.clientes = clientes;
-		}		
+		}
+
+		public boolean isMostrarTabelaAlteracao() {
+			return mostrarTabelaAlteracao;
+		}
+
+		public void setMostrarTabelaAlteracao(boolean mostrarTabelaAlteracao) {
+			this.mostrarTabelaAlteracao = mostrarTabelaAlteracao;
+		}
+
+		public Cliente getClienteAlteracao() {
+			return clienteAlteracao;
+		}
+
+		public void setClienteAlteracao(Cliente clienteAlteracao) {
+			this.clienteAlteracao = clienteAlteracao;
+		}
+
+		
+		
+		
 		
 		
 }
